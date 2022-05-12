@@ -7,7 +7,7 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /var/cache/apt/*
 
-RUN npm i -g powerbi-visuals-tools
+RUN npm i -g powerbi-visuals-tools ncp
 
 COPY ./conf/openssl.cnf /tmp/openssl.cnf
 
