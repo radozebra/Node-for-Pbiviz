@@ -1,13 +1,19 @@
-FROM node:16.14
+FROM node:18.12
 
 MAINTAINER Radovan Obal <radovan.obal@appicanis.si>
 
 RUN apt-get update \
-	&& apt-get install -y openssl libnss3-tools \
+	&& apt-get install -y openssl libnss3-tools git git-ftp \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /var/cache/apt/*
 
 RUN npm i -g powerbi-visuals-tools ncp
+
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+RUN apt-get update
+RUN apt --fix-broken install
+RUN apt-get install google-chrome-stable libxss1 -y
 
 COPY ./conf/openssl.cnf /tmp/openssl.cnf
 
@@ -27,3 +33,4 @@ RUN mkdir -p $HOME/.pki/nssdb \
 
 RUN cp /tmp/local-root-ca.pem /usr/local/share/ca-certificates/ \
     && update-ca-certificates
+
