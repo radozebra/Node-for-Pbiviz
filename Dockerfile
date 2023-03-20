@@ -1,4 +1,4 @@
-FROM node:18.12
+FROM node:18.15
 
 MAINTAINER Radovan Obal <radovan.obal@appicanis.si>
 
